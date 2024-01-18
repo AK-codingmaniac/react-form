@@ -99,6 +99,7 @@ export default function Signup() {
       </div>
 
       <p className="form-actions">
+        {/* For resetting the whole form,we should set the type attribute to reset */}
         <button type="reset" className="button button-flat">
           Reset
         </button>
