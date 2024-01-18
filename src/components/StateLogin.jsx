@@ -9,9 +9,15 @@ export default function Login() {
     password: "",
   });
 
+  //Validation on lost focus(blur)
+  //State for checking whether user have edited the field or not
+  const [didEdit, setDidEdit] = useState({
+    email: false,
+    password: false,
+  });
+
   //Validation on every keystroke
-  const emailIsInvalid =
-    enteredValues.email !== "" && !enteredValues.email.includes("@");
+  const emailIsInvalid = didEdit.email && !enteredValues.email.includes("@");
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -31,6 +37,17 @@ export default function Login() {
       ...prevValues,
       [identifier]: value,
     }));
+    setDidEdit((prevEdit) => ({
+      ...prevEdit,
+      [identifier]: false,
+    }));
+  }
+
+  function handleInputBlur(identifier) {
+    setDidEdit((prevEdit) => ({
+      ...prevEdit,
+      [identifier]: true,
+    }));
   }
 
   return (
@@ -46,6 +63,7 @@ export default function Login() {
             name="email"
             // onChange={handleEmailChange}
             // value={enteredEmail}
+            onBlur={() => handleInputBlur("email")}
             onChange={(event) => handleInputChange("email", event.target.value)}
             value={enteredValues.email}
           />
